@@ -127,7 +127,7 @@ func ddnsWebhook(writer http.ResponseWriter, request *http.Request) {
 		_, _ = writer.Write([]byte("error"))
 		return
 	}
-	webhookDataSaveStore(ddd.Ipv4Hosts, ddd.Ipv4Hosts)
+	webhookDataSaveStore(ddd.Ipv4Hosts, ddd.Ipv4Ip)
 	if ddd.Message != nil {
 		SendMessageByUrl(ddd.Message)
 	}
