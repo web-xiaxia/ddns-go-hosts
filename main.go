@@ -26,9 +26,9 @@ type WebhookData struct {
 }
 
 var ipStore sync.Map
-var filePath = "./ip_store.txt"
+var filePath = "./data/ip_store.txt"
 var ignoreHosts = make(map[string]bool)
-var addr = ":8080"
+var port = "8080"
 
 func main() {
 	log.Println("⏳ 开始运行...")
@@ -36,9 +36,9 @@ func main() {
 	if len(envFilePath) > 0 {
 		filePath = envFilePath
 	}
-	envAddr := os.Getenv("DDNS_GO_HOSTS_ADDR")
+	envAddr := os.Getenv("DDNS_GO_HOSTS_PORT")
 	if len(envAddr) > 0 {
-		addr = envAddr
+		port = envAddr
 	}
 	envIgnoreHosts := os.Getenv("DDNS_GO_HOSTS_IGNORE")
 	if len(envIgnoreHosts) > 0 {
@@ -106,7 +106,7 @@ func runServer() {
 	handler := http.NewServeMux()
 	handler.HandleFunc("/webhook", ddnsWebhook)
 	handler.HandleFunc("/hosts", getHosts)
-	err := http.ListenAndServe(addr, handler)
+	err := http.ListenAndServe(fmt.Sprintf(":%s", port), handler)
 	if err != nil {
 		log.Panic("http.ListenAndServe err:", err)
 	}
