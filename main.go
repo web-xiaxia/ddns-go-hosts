@@ -28,7 +28,7 @@ type WebhookData struct {
 var ipStore sync.Map
 var filePath = "./data/ip_store.txt"
 var ignoreHosts = make(map[string]bool)
-var port = "8080"
+var port = "9875"
 
 func main() {
 	log.Println("⏳ 开始运行...")
