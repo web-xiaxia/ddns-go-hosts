@@ -31,7 +31,7 @@ var ignoreHosts = make(map[string]bool)
 var port = "9875"
 
 func main() {
-	log.Println("⏳ v0.0.4 开始运行...")
+	log.Println("⏳ v0.0.5 开始运行...")
 	envFilePath := os.Getenv("DDNS_GO_HOSTS_PATH")
 	if len(envFilePath) > 0 {
 		filePath = envFilePath
