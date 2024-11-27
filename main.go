@@ -31,7 +31,7 @@ var ignoreHosts = make(map[string]bool)
 var port = "9875"
 
 func main() {
-	log.Println("⏳ v0.0.5 开始运行...")
+	log.Println("⏳ v0.0.7 开始运行...")
 	envFilePath := os.Getenv("DDNS_GO_HOSTS_PATH")
 	if len(envFilePath) > 0 {
 		filePath = envFilePath
@@ -137,8 +137,9 @@ func getHosts(writer http.ResponseWriter, request *http.Request) {
 	defer func() {
 		_ = request.Body.Close()
 	}()
-	headers, _ := json.Marshal(request.Header)
-	fmt.Printf("%s: %s\n", time.Now().Format(time.DateTime), headers)
+	cfIp := request.Header.Get("Cf-Connecting-Ip")
+	ua := request.Header.Get("User-Agent")
+	fmt.Printf("%s: %s %s\n", time.Now().Format(time.DateTime), cfIp, ua)
 	_, err := writer.Write([]byte(ipStoreToHosts()))
 	if err != nil {
 		return
